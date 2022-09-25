@@ -35,7 +35,7 @@ public class EventControllerTest {
 
     @Test
     public void createEvent() throws Exception {
-        mockMvc.perform(post("api/events/")
+        mockMvc.perform(post("/api/events/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaTypes.HAL_JSON)
                 )
