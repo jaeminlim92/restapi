@@ -1,28 +1,28 @@
 package me.whitehouse.demoinflearnrestapi.event;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 /**
  * packageName    : me.whitehouse.demoinflearnrestapi.event
- * fileName       : Event
+ * fileName       : EventDto
  * author         : jaeminlim
- * date           : 2022/09/25
+ * date           : 2022/10/05
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2022/09/25        jaeminlim       최초 생성
+ * 2022/10/05        jaeminlim       최초 생성
  */
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of="id")
-public class Event {
-    private Integer id;
+@Data
+public class EventDto {
     private String name;
     private String description;
     private LocalDateTime beginEnrollmentDateTime;
@@ -33,7 +33,4 @@ public class Event {
     private int basePrice; // (optional)
     private int maxPrice; // (optional)
     private int limitOfEnrollment;
-    private boolean offline;
-    private boolean free;
-    private EventStatus eventStatus = EventStatus.DRAFT;
 }
