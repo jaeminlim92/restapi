@@ -11,7 +11,6 @@ import java.net.URI;
 
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
  * packageName    : me.whitehouse.demoinflearnrestapi.event
@@ -25,17 +24,26 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * 2022/10/02        jaeminlim       최초 생성
  */
 @Controller
-@RequestMapping(value="/api/events")
+@RequestMapping(value = "/api/events")
 @Slf4j
 public class EventController {
 
+    private final EventRepository eventRepository;
+
+    public EventController(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
+
     @PostMapping
+
     public ResponseEntity createEvent(
             @RequestBody Event event
     ) {
+//        Event newEvent = this.eventRepository.save(event);
+
         URI craetUri = linkTo(EventController.class).slash("{id}").toUri();
         log.info("들어왔나요?");
-        event.setId(100);
         return ResponseEntity.created(craetUri).body(event);
     }
 
