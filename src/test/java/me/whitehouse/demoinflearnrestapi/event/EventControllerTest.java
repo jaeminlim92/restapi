@@ -57,7 +57,6 @@ public class EventControllerTest {
                 .location("강남역 D2")
                 .build();
 
-        event.setId(10);
         Mockito.when(eventRepository.save(event)).thenReturn(event);
 
 
