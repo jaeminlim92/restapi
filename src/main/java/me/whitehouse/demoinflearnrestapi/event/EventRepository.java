@@ -16,4 +16,6 @@ import javax.persistence.criteria.CriteriaBuilder;
  * 2022/10/30        jaeminlim       최초 생성
  */
 public interface EventRepository extends JpaRepository<Event, Integer> {
+
+           
 }
