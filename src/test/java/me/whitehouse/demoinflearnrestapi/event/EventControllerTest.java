@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -70,7 +71,35 @@ public class EventControllerTest {
         ;
     }
 
+    @Test
+    public void createEventError() throws Exception {
 
+        Event event = Event.builder()
+                .id(100)
+                .name("spring")
+                .description("REST API")
+                .beginEventDateTime(LocalDateTime.now())
+                .closeEnrollmentDateTime(LocalDateTime.now())
+                .beginEnrollmentDateTime(LocalDateTime.now())
+                .endEventDateTime(LocalDateTime.now())
+                .basePrice(100)
+                .maxPrice(200)
+                .limitOfEnrollment(100)
+                .free(true)
+                .offline(false)
+                .location("강남역 D2")
+                .build();
+
+//        Mockito.when(eventRepository.save(event)).thenReturn(event);
+
+        mockMvc.perform(post("/api/events/")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(objectMapper.writeValueAsString(event))
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+        ;
+    }
 
 
 
