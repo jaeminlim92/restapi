@@ -1,9 +1,6 @@
 package me.whitehouse.demoinflearnrestapi.event;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.persistence.criteria.CriteriaBuilder;
-
 /**
  * packageName    : me.whitehouse.demoinflearnrestapi.event
  * fileName       : EventRepository

@@ -1,12 +1,11 @@
 package me.whitehouse.demoinflearnrestapi.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.h2.mvstore.type.ObjectDataType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,20 +30,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * 2022/10/30        jaeminlim       최초 생성
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@SpringBootTest
+@AutoConfigureMockMvc
 public class EventControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     ObjectMapper objectMapper;
 
-    @MockBean
-    EventRepository eventRepository;
     @Test
     public void createEvent() throws Exception {
+
         Event event = Event.builder()
+                .id(100)
                 .name("spring")
                 .description("REST API")
                 .beginEventDateTime(LocalDateTime.now())
@@ -54,11 +53,12 @@ public class EventControllerTest {
                 .basePrice(100)
                 .maxPrice(200)
                 .limitOfEnrollment(100)
+                .free(true)
+                .offline(false)
                 .location("강남역 D2")
                 .build();
 
-        Mockito.when(eventRepository.save(event)).thenReturn(event);
-
+//        Mockito.when(eventRepository.save(event)).thenReturn(event);
 
         mockMvc.perform(post("/api/events/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
