@@ -1,5 +1,6 @@
 package me.whitehouse.demoinflearnrestapi.event;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -86,7 +87,6 @@ public class EventControllerTest {
                 .location("강남역 D2")
                 .build();
 
-//        Mockito.when(eventRepository.save(event)).thenReturn(event);
 
         mockMvc.perform(post("/api/events/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -100,7 +100,7 @@ public class EventControllerTest {
     @Test
     public void createEvent_Bad_Request_Empty_Input() throws  Exception {
         EventDto eventDto = EventDto.builder()
-                .name("spring")
+                .name("")
                 .description("REST API")
                 .beginEventDateTime(LocalDateTime.now())
                 .closeEnrollmentDateTime(LocalDateTime.now())
@@ -115,6 +115,27 @@ public class EventControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(this.objectMapper.writeValueAsString(eventDto)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void createEvent_BadRequest_Wrong_Input() throws Exception {
+        EventDto eventDto = EventDto.builder()
+                .name("spring")
+                .description("REST API")
+                .beginEventDateTime(LocalDateTime.of(2022, 11, 10,00,11))
+                .closeEnrollmentDateTime(LocalDateTime.of(2022, 11, 10,00,11))
+                .beginEnrollmentDateTime(LocalDateTime.of(2022, 11, 10,00,11))
+                .endEventDateTime(LocalDateTime.of(2022, 11, 9,00,11))
+                .basePrice(100)
+                .maxPrice(200)
+                .limitOfEnrollment(100)
+                .build();
+
+        this.mockMvc.perform(post("/api/events")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(this.objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isBadRequest());
+
     }
 
 
